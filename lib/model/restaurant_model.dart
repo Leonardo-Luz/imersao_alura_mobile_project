@@ -1,3 +1,5 @@
+import 'package:imersao_alura_mobile_project/model/dish_model.dart';
+
 class RestaurantModel {
   String id;
   String imagePath;
@@ -6,6 +8,7 @@ class RestaurantModel {
   double stars;
   int distance;
   List<String> categories;
+  List<DishModel> dishes;
 
   RestaurantModel({
     required this.id,
@@ -15,6 +18,7 @@ class RestaurantModel {
     required this.stars,
     required this.distance,
     required this.categories,
+    required this.dishes,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +30,7 @@ class RestaurantModel {
       'stars': stars,
       'distance': distance,
       'categories': categories,
+      'dishes': dishes.map((dish) => dish.toMap()).toList(),
     };
   }
 
@@ -38,11 +43,14 @@ class RestaurantModel {
       stars: map['stars'],
       distance: map['distance'],
       categories: List<String>.from(map['categories']),
+      dishes: List<DishModel>.from(
+        map['dishes'].map((dish) => DishModel.fromMap(dish)),
+      ),
     );
   }
 
   @override
   String toString() {
-    return '{$id, $imagePath, $name, $description, $stars, $distance, $categories}';
+    return 'Restaurant: {$id, $imagePath, $name, $description, $stars, $distance, $categories, $dishes}';
   }
 }
